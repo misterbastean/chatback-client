@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import RoomCodeForm from "./components/RoomCodeForm";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row className="mb-4">
+        <h1 className="text-center my-4 display-1">ChatBack</h1>
+      </Row>
+      <Row className="mb-5">
+        <p className="text-center fs-4">ChatBack gives everyone a voice.</p>
+      </Row>
+      <Row className="mb-5"></Row>
+      <RoomCodeForm />
+      <Row className="my-5">
+        <Col xs={1} />
+        <Col xs={4}>
+          <hr className="" />
+        </Col>
+        <Col xs={2} className="text-center">
+          <p>or</p>
+        </Col>
+        <Col xs={4}>
+          <hr className="divider flex-grow" />
+        </Col>
+        <Col xs={1} />
+      </Row>
+      <Row className="justify-content-center">
+        <Col xs="auto">
+          <Button variant="success" size="lg">
+            Create New Room
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
