@@ -32,6 +32,12 @@ const demoMessages = [
     userName: "Jacob",
     postedDate: Date.now(),
   },
+  {
+    _id: "5",
+    text: "Bacon ipsum dolor amet bresaola pancetta hamburger, tenderloin beef rump landjaeger pork belly corned beef pig",
+    userName: "Maggie",
+    postedDate: Date.now(),
+  },
 ];
 
 function RoomPage() {
@@ -41,13 +47,13 @@ function RoomPage() {
 
   return (
     <Container className="mt-2">
-      <Row>
+      <Row className="mb-5">
         <Col>
           <h1 className="text-center mt-2">{params.roomCode}</h1>
         </Col>
       </Row>
       <ChatPane messages={messages} />
-      <Form className="mb-3">
+      <Form className="mb-3 mx-3 fixed-bottom">
         <Row>
           <Col xs={9}>
             <Form.Group>

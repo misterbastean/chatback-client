@@ -1,8 +1,9 @@
+import Container from "react-bootstrap/Container";
 import Message from "./Message";
 
 function ChatPane({ messages }) {
   return (
-    <div>
+    <Container style={{ marginBottom: "5em" }}>
       <p>Chat Pane</p>
       <div>
         {messages.map((message) => (
@@ -14,7 +15,7 @@ function ChatPane({ messages }) {
           />
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
 
