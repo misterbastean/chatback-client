@@ -1,8 +1,11 @@
+import Container from "react-bootstrap/Container";
+import NewRoomForm from "../components/NewRoomForm";
+
 function NewRoomPage() {
   return (
-    <div>
-      <p>New Room Page</p>
-    </div>
+    <Container className="mt-5">
+      <NewRoomForm />
+    </Container>
   );
 }
 
