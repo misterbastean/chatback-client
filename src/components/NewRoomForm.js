@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useLocation } from "wouter";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -7,6 +8,7 @@ function NewRoomForm() {
   const [userName, setUserName] = useState("");
   const [roomName, setRoomName] = useState("");
   const [roomDays, setRoomDays] = useState(1);
+  const [location, setLocation] = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +32,18 @@ function NewRoomForm() {
       requestOptions
     )
       .then((response) => response.json())
-      .then((response) => console.log(response));
+      .then((response) => {
+        if (!response.success) {
+          // TODO: Handle error
+          console.log("Error creating room:", response.message);
+        } else {
+          setLocation(`/room/${response.room.roomCode}`);
+        }
+      })
+      .catch((err) => {
+        // TODO: Handle error
+        console.log("Error creating room:", err);
+      });
   };
 
   return (
