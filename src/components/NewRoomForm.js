@@ -8,7 +8,7 @@ function NewRoomForm() {
   const [userName, setUserName] = useState("");
   const [roomName, setRoomName] = useState("");
   const [roomDays, setRoomDays] = useState(1);
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
