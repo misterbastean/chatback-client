@@ -6,67 +6,65 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ChatPane from "../components/ChatPane";
-
-const demoMessages = [
-  {
-    _id: "1",
-    text: "Bacon ipsum dolor amet bresaola pancetta hamburger, tenderloin beef rump landjaeger pork belly corned beef pig",
-    userName: "Josh",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "2",
-    text: "Pancetta pork chop alcatra, shank jowl chicken pork belly sausage. Sirloin ground round ham shank, capicola cupim cow alcatra short loin doner frankfurter.",
-    userName: "Kim",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "3",
-    text: "Brisket meatloaf chislic kielbasa, cupim hamburger pig drumstick buffalo fatback pork chop tail.",
-    userName: "Zoe",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "4",
-    text: "lulz",
-    userName: "Jacob",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "5",
-    text: "Bacon ipsum dolor amet bresaola pancetta hamburger, tenderloin beef rump landjaeger pork belly corned beef pig",
-    userName: "Maggie",
-    postedDate: Date.now(),
-  },
-];
+import useChat from "../hooks/useChat";
 
 function RoomPage() {
-  const [messages, setMessages] = useState([...demoMessages]);
   const [, params] = useRoute("/room/:roomCode");
-  console.log("params:", params);
+  // Create WS and manages messaging
+  const { messages, sendMessage } = useChat(params.roomCode);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleNewMessageChange = (event) => {
+    setNewMessage(event.target.value);
+  };
+
+  const handleSendMessage = () => {
+    sendMessage(newMessage);
+    setNewMessage("");
+  };
+
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const text = formData.get("message");
+  //   const message = {
+  //     _id: Date.now(),
+  //     text,
+  //     userName: "Josh",
+  //     postedDate: Date.now(),
+  //   };
+  //   console.log("message:", message);
+  //   setMessages([...messages, message]);
+  //   e.target.reset();
+  // };
 
   return (
     <Container className="mt-2">
-      <Row className="mb-5">
+      <Row>
         <Col>
           <h1 className="text-center mt-2">{params.roomCode}</h1>
         </Col>
       </Row>
       <ChatPane messages={messages} />
-      <Form className="mb-3 mx-3 fixed-bottom">
+      <div className="mb-3 mx-3 fixed-bottom">
         <Row>
           <Col xs={9}>
             <Form.Group>
-              <Form.Control type="text" placeholder="Type message..." />
+              <Form.Control
+                type="text"
+                placeholder="Type message..."
+                value={newMessage}
+                onChange={handleNewMessageChange}
+              />
             </Form.Group>
           </Col>
           <Col xs={3} className="d-grid gap-2">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" onClick={handleSendMessage}>
               Send
             </Button>
           </Col>
         </Row>
-      </Form>
+      </div>
     </Container>
   );
 }
