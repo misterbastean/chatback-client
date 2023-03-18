@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRoute } from "wouter";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -14,6 +14,13 @@ function RoomPage() {
   const { messages, sendMessage } = useChat(params.roomCode);
   const [newMessage, setNewMessage] = useState("");
 
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    if (messages) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
   };
@@ -21,6 +28,12 @@ function RoomPage() {
   const handleSendMessage = () => {
     sendMessage(newMessage);
     setNewMessage("");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSendMessage();
+    }
   };
 
   return (
@@ -31,6 +44,7 @@ function RoomPage() {
         </Col>
       </Row>
       <ChatPane messages={messages} />
+      <div ref={messagesEndRef} />
       <div className="mb-3 mx-3 fixed-bottom">
         <Row>
           <Col xs={9}>
@@ -40,6 +54,7 @@ function RoomPage() {
                 placeholder="Type message..."
                 value={newMessage}
                 onChange={handleNewMessageChange}
+                onKeyDown={handleKeyDown}
               />
             </Form.Group>
           </Col>
