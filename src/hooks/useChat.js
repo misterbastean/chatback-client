@@ -4,47 +4,22 @@ import socketIOClient from "socket.io-client";
 const NEW_MESSAGE_EVENT = "newChatMessage";
 const SOCKET_SERVER_URL = "http://localhost:3001";
 
-const demoMessages = [
-  {
-    _id: "1",
-    text: "Bacon ipsum dolor amet bresaola pancetta hamburger, tenderloin beef rump landjaeger pork belly corned beef pig",
-    userName: "Josh",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "2",
-    text: "Pancetta pork chop alcatra, shank jowl chicken pork belly sausage. Sirloin ground round ham shank, capicola cupim cow alcatra short loin doner frankfurter.",
-    userName: "Kim",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "3",
-    text: "Brisket meatloaf chislic kielbasa, cupim hamburger pig drumstick buffalo fatback pork chop tail.",
-    userName: "Zoe",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "4",
-    text: "lulz",
-    userName: "Jacob",
-    postedDate: Date.now(),
-  },
-  {
-    _id: "5",
-    text: "Bacon ipsum dolor amet bresaola pancetta hamburger, tenderloin beef rump landjaeger pork belly corned beef pig",
-    userName: "Maggie",
-    postedDate: Date.now(),
-  },
-];
-
 const useChat = (roomCode) => {
-  const [messages, setMessages] = useState([...demoMessages]);
+  const [messages, setMessages] = useState([]);
   const socketRef = useRef();
 
   useEffect(() => {
     // Create WS connection
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
       query: { roomCode },
+    });
+
+    // Load previous messages when joining the room
+    socketRef.current.emit("loadMessages");
+
+    // Listen for previous messages
+    socketRef.current.on("previousMessages", (data) => {
+      setMessages(data);
     });
 
     // Listen for incoming messages
@@ -61,6 +36,8 @@ const useChat = (roomCode) => {
       socketRef.current.disconnect();
     };
   }, [roomCode]);
+
+  useEffect(() => {}, []);
 
   // Sends message to server, to be forwarded to all users in the same room
   const sendMessage = (text) => {
