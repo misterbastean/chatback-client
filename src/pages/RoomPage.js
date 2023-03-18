@@ -23,21 +23,6 @@ function RoomPage() {
     setNewMessage("");
   };
 
-  // const handleFormSubmit = (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target);
-  //   const text = formData.get("message");
-  //   const message = {
-  //     _id: Date.now(),
-  //     text,
-  //     userName: "Josh",
-  //     postedDate: Date.now(),
-  //   };
-  //   console.log("message:", message);
-  //   setMessages([...messages, message]);
-  //   e.target.reset();
-  // };
-
   return (
     <Container className="mt-2">
       <Row>
