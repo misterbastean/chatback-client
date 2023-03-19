@@ -13,9 +13,10 @@ function NewRoomForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Generate and store UUID
+    // Generate and store UUID and userName
     const userId = uuidv4();
     localStorage.setItem("userId", userId); // TODO: update to cookie for security
+    localStorage.setItem("userName", userName);
 
     const requestOptions = {
       method: "POST",

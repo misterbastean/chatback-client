@@ -43,7 +43,8 @@ const useChat = (roomCode) => {
   const sendMessage = (text) => {
     socketRef.current.emit(NEW_MESSAGE_EVENT, {
       text,
-      userName: "Josh", // TODO: Update to real userName
+      userId: localStorage.getItem("userId"),
+      userName: localStorage.getItem("userName"),
       postedDate: Date.now(),
     });
   };
