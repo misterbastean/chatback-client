@@ -37,8 +37,6 @@ const useChat = (roomCode) => {
     };
   }, [roomCode]);
 
-  useEffect(() => {}, []);
-
   // Sends message to server, to be forwarded to all users in the same room
   const sendMessage = (text) => {
     const userId = localStorage.getItem("userId");
