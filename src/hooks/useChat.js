@@ -41,10 +41,14 @@ const useChat = (roomCode) => {
 
   // Sends message to server, to be forwarded to all users in the same room
   const sendMessage = (text) => {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
+    if (!userId || !userName) throw new Error("Missing userId or userName");
+
     socketRef.current.emit(NEW_MESSAGE_EVENT, {
       text,
-      userId: localStorage.getItem("userId"),
-      userName: localStorage.getItem("userName"),
+      userId,
+      userName,
       postedDate: Date.now(),
     });
   };
