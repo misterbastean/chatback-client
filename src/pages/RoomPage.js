@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRoute } from "wouter";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Container } from "react-bootstrap";
 import ChatPane from "../components/ChatPane";
+import ChatHeader from "../components/ChatHeader";
+import ChatInput from "../components/ChatInput";
 import useChat from "../hooks/useChat";
 
 function RoomPage() {
@@ -37,34 +35,15 @@ function RoomPage() {
   };
 
   return (
-    <Container className="mt-2">
-      <Row>
-        <Col>
-          <h1 className="text-center mt-2">{params.roomCode}</h1>
-        </Col>
-      </Row>
+    <Container fluid>
+      <ChatHeader roomCode={params.roomCode} />
       <ChatPane messages={messages} />
-      <div ref={messagesEndRef} />
-      <div className="mb-3 mx-3 fixed-bottom">
-        <Row>
-          <Col xs={9}>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="Type message..."
-                value={newMessage}
-                onChange={handleNewMessageChange}
-                onKeyDown={handleKeyDown}
-              />
-            </Form.Group>
-          </Col>
-          <Col xs={3} className="d-grid gap-2">
-            <Button variant="primary" onClick={handleSendMessage}>
-              Send
-            </Button>
-          </Col>
-        </Row>
-      </div>
+      <div ref={messagesEndRef}></div>
+      <ChatInput
+        handleNewMessageChange={handleNewMessageChange}
+        handleKeyDown={handleKeyDown}
+        newMessage={newMessage}
+      />
     </Container>
   );
 }

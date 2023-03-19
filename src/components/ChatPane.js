@@ -1,10 +1,9 @@
-import Container from "react-bootstrap/Container";
+import { Row } from "react-bootstrap";
 import Message from "./Message";
 
 function ChatPane({ messages }) {
   return (
-    <Container style={{ marginBottom: "5em" }}>
-      <p>Chat Pane</p>
+    <Row style={{ marginTop: "5rem", marginBottom: "5rem" }}>
       <div>
         {messages.map((message) => (
           <Message
@@ -12,10 +11,11 @@ function ChatPane({ messages }) {
             messageText={message.text}
             userName={message.userName}
             postedDate={message.postedDate}
+            bgColor="light"
           />
         ))}
       </div>
-    </Container>
+    </Row>
   );
 }
 
