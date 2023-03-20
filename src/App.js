@@ -2,6 +2,7 @@ import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
 import RoomPage from "./pages/RoomPage";
 import NewRoomPage from "./pages/NewRoomPage";
+import JoinRoomPage from "./pages/JoinRoomPage";
 import AboutPage from "./pages/AboutPage";
 
 function App() {
@@ -17,8 +18,11 @@ function App() {
         <Route path="/room/new">
           <NewRoomPage />
         </Route>
-        <Route path="/room/:id">
+        <Route path="/room/:roomCode">
           <RoomPage />
+        </Route>
+        <Route path="/room/:roomCode/join">
+          <JoinRoomPage />
         </Route>
       </Switch>
     </>
