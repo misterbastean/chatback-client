@@ -13,21 +13,17 @@ function NewRoomForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Generate and store UUID and userName
-    const userId = uuidv4();
-    localStorage.setItem("userId", userId); // TODO: update to cookie for security
-    localStorage.setItem("userName", userName);
-
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userName,
-        userId,
-        roomName,
+        roomName: roomName || "Unnamed ChatBack",
         roomDays,
       }),
     };
+    console.log("requestOptions:", requestOptions);
+
     fetch(
       `http://${window.location.hostname}:3001/api/v1/rooms`,
       requestOptions
@@ -38,6 +34,11 @@ function NewRoomForm() {
           // TODO: Handle error
           console.log("Error creating room:", response.message);
         } else {
+          // Store userId in localStorage
+          console.log(response);
+          localStorage.setItem("userId", response.room.members[0]._id); // TODO: update to cookie for security
+
+          // Redirect to room page
           setLocation(`/room/${response.room.roomCode}`);
         }
       })

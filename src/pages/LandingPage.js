@@ -15,19 +15,23 @@ function LandingPage() {
         <p className="text-center fs-4">ChatBack gives everyone a voice.</p>
       </Row>
       <Row className="mb-5"></Row>
-      <RoomCodeForm />
+      <Row className="d-flex justify-content-center">
+        <Col xl={4}>
+          <RoomCodeForm />
+        </Col>
+      </Row>
       <Row className="my-5">
-        <Col xs={1} />
-        <Col xs={4}>
+        <Col xs={3} />
+        <Col xs={2}>
           <hr className="" />
         </Col>
         <Col xs={2} className="text-center">
           <p>or</p>
         </Col>
-        <Col xs={4}>
+        <Col xs={2}>
           <hr className="divider flex-grow" />
         </Col>
-        <Col xs={1} />
+        <Col xs={3} />
       </Row>
       <Row className="justify-content-center">
         <Col xs="auto">

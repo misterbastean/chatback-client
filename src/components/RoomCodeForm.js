@@ -1,5 +1,5 @@
 import { useRef } from "react";
-
+import { useLocation } from "wouter";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -8,11 +8,8 @@ import Container from "react-bootstrap/Container";
 const ROOM_CODE_LENGTH = 4;
 
 function RoomCodeForm() {
-  const roomCode = "";
   const roomCodeInputsRefs = useRef([null, null, null, null]);
-  console.log("roomcodeInputsRefs:", roomCodeInputsRefs);
-
-  console.log("roomCode:", roomCode);
+  const [, navigate] = useLocation();
 
   const handleInputChange = (e, index) => {
     const allInputsFull = roomCodeInputsRefs.current.every((item) => {
@@ -26,6 +23,12 @@ function RoomCodeForm() {
 
       if (allInputsFull) {
         console.log("All inputs full, requesting room.");
+        const roomCode = roomCodeInputsRefs.current
+          .map((input) => {
+            return input.value;
+          })
+          .join("");
+        navigate(`/room/${roomCode}`);
       }
     }
   };
