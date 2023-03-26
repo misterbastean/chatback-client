@@ -22,7 +22,6 @@ function NewRoomForm() {
         roomDays,
       }),
     };
-    console.log("requestOptions:", requestOptions);
 
     fetch(
       `http://${window.location.hostname}:3001/api/v1/rooms`,
@@ -35,7 +34,6 @@ function NewRoomForm() {
           console.log("Error creating room:", response.message);
         } else {
           // Store userId in localStorage
-          console.log(response);
           localStorage.setItem("userId", response.room.members[0]._id); // TODO: update to cookie for security
 
           // Redirect to room page

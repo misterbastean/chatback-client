@@ -1,34 +1,51 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useLocation, useRoute } from "wouter";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 
 function NewRoomPage() {
   const [userName, setUserName] = useState("");
   const [, params] = useRoute("/room/:roomCode/join");
-  const [, navigate] = useLocation();
+  const [, setLocation] = useLocation();
 
   // TODO: Set userName valute from localstorage on page load, if exists
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Verify username exists and has length
-    if (!userName || userName.length === 0) {
-      console.error("Enter a username.");
-      return;
-    }
-    if (userName.length > 20) {
-      console.error("Username too long (20 characters max).");
-      return;
-    }
 
-    // Set name and UUID in localstorage
-    const userId = uuidv4();
-    localStorage.setItem("userId", userId);
-    localStorage.setItem("userName", userName);
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userName,
+        roomCode: params.roomCode,
+      }),
+    };
 
-    // Redirect to room
-    navigate(`/room/${params.roomCode}`);
+    fetch(
+      `http://${window.location.hostname}:3001/api/v1/rooms/${params.roomCode}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        if (!response.success) {
+          // TODO: Handle error
+          console.log("Error joining room:", response.message);
+        } else {
+          // Store userId in localStorage
+          localStorage.setItem(
+            "userId",
+            response.room.members.find((member) => member.userName === userName)
+              ._id
+          ); // TODO: update to cookie for security
+
+          // Redirect to room page
+          setLocation(`/room/${response.room.roomCode}`);
+        }
+      })
+      .catch((err) => {
+        // TODO: Handle error
+        console.log("Error joining room:", err);
+      });
   };
 
   return (
@@ -48,6 +65,9 @@ function NewRoomPage() {
             }}
           />
         </Form.Group>
+        <Button size="lg" variant="success" type="submit">
+          Join
+        </Button>
       </Form>
     </Container>
   );

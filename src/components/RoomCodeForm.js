@@ -22,13 +22,12 @@ function RoomCodeForm() {
       }
 
       if (allInputsFull) {
-        console.log("All inputs full, requesting room.");
         const roomCode = roomCodeInputsRefs.current
           .map((input) => {
             return input.value;
           })
           .join("");
-        navigate(`/room/${roomCode}`);
+        navigate(`/room/${roomCode}/join`);
       }
     }
   };
@@ -48,7 +47,6 @@ function RoomCodeForm() {
         <Container style={{ maxWidth: "80%" }}>
           <Row className="px-6">
             {roomCodeInputsRefs.current.map((_ref, index) => {
-              console.log(index);
               return (
                 <Col className="mx-0 px-1" key={`roomCode=${index}`}>
                   <Form.Control
