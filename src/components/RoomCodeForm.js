@@ -12,6 +12,7 @@ function RoomCodeForm() {
   const [, navigate] = useLocation();
 
   const handleInputChange = (e, index) => {
+    e.target.value = e.target.value.toUpperCase();
     const allInputsFull = roomCodeInputsRefs.current.every((item) => {
       return item.value.trim().length > 0;
     });
