@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "wouter";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
