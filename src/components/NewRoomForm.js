@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import toast from "react-hot-toast";
 
-function NewRoomForm({ handleError }) {
+function NewRoomForm() {
   const [userName, setUserName] = useState("");
   const [roomName, setRoomName] = useState("");
   const [roomDays, setRoomDays] = useState(1);
@@ -29,9 +30,8 @@ function NewRoomForm({ handleError }) {
       .then((response) => response.json())
       .then((response) => {
         if (!response.success) {
-          // TODO: Handle error
           console.log("Error creating room:", response.message);
-          handleError(response.message);
+          toast.error(response.message);
         } else {
           // Store userId in localStorage
           localStorage.setItem("userId", response.room.members[0]._id); // TODO: update to cookie for security
@@ -41,9 +41,8 @@ function NewRoomForm({ handleError }) {
         }
       })
       .catch((err) => {
-        // TODO: Handle error
         console.log("Error creating room:", err.message);
-        handleError(err.message);
+        toast.error(err.message);
       });
   };
 

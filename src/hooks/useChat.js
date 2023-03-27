@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const NEW_MESSAGE_EVENT = "newChatMessage";
+const ERROR_EVENT = "error";
 const SOCKET_SERVER_URL = "http://localhost:3001";
 
 const useChat = (roomCode) => {
@@ -30,6 +31,9 @@ const useChat = (roomCode) => {
       };
       setMessages((messages) => [...messages, incomingMessage]);
     });
+
+    // Listen for errors
+    socketRef.current.on(ERROR_EVENT, (errorMessage) => {});
 
     // When connection is closed, destroy the socket ref
     return () => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useRoute } from "wouter";
 import { Container, Form, Button } from "react-bootstrap";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 function NewRoomPage() {
   const savedUserName = localStorage.getItem("userName");
@@ -51,7 +51,7 @@ function NewRoomPage() {
 
   return (
     <Container className="mt-5">
-      <Toaster />
+      <button onClick={() => toast.error("this is an error")}>error</button>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Your Name</Form.Label>

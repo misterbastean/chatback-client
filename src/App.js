@@ -1,4 +1,5 @@
 import { Route, Switch } from "wouter";
+import { Toaster } from "react-hot-toast";
 import LandingPage from "./pages/LandingPage";
 import RoomPage from "./pages/RoomPage";
 import NewRoomPage from "./pages/NewRoomPage";
@@ -8,6 +9,7 @@ import AboutPage from "./pages/AboutPage";
 function App() {
   return (
     <>
+      <Toaster />
       <Route path="/">
         <LandingPage />
       </Route>
