@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useLocation, useRoute } from "wouter";
 import { Container, Form, Button } from "react-bootstrap";
+import toast, { Toaster } from "react-hot-toast";
 
 function NewRoomPage() {
   const savedUserName = localStorage.getItem("userName");
   const [userName, setUserName] = useState(savedUserName || "");
   const [, params] = useRoute("/room/:roomCode/join");
   const [, setLocation] = useLocation();
-
-  // TODO: Set userName valute from localstorage on page load, if exists
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,8 +28,8 @@ function NewRoomPage() {
       .then((response) => response.json())
       .then((response) => {
         if (!response.success) {
-          // TODO: Handle error
           console.log("Error joining room:", response.message);
+          toast.error(`Error joining room: ${response.message}`);
         } else {
           // Store user info in localStorage
           localStorage.setItem("userName", userName);
@@ -45,13 +44,14 @@ function NewRoomPage() {
         }
       })
       .catch((err) => {
-        // TODO: Handle error
         console.log("Error joining room:", err);
+        toast.error(`Error joining room: ${err.message}`);
       });
   };
 
   return (
     <Container className="mt-5">
+      <Toaster />
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Your Name</Form.Label>
