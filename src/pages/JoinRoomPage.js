@@ -3,7 +3,8 @@ import { useLocation, useRoute } from "wouter";
 import { Container, Form, Button } from "react-bootstrap";
 
 function NewRoomPage() {
-  const [userName, setUserName] = useState("");
+  const savedUserName = localStorage.getItem("userName");
+  const [userName, setUserName] = useState(savedUserName || "");
   const [, params] = useRoute("/room/:roomCode/join");
   const [, setLocation] = useLocation();
 
@@ -31,7 +32,8 @@ function NewRoomPage() {
           // TODO: Handle error
           console.log("Error joining room:", response.message);
         } else {
-          // Store userId in localStorage
+          // Store user info in localStorage
+          localStorage.setItem("userName", userName);
           localStorage.setItem(
             "userId",
             response.room.members.find((member) => member.userName === userName)

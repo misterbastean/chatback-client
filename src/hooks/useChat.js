@@ -11,7 +11,7 @@ const useChat = (roomCode) => {
   useEffect(() => {
     // Create WS connection
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { roomCode },
+      query: { roomCode, userId: localStorage.getItem("userId") },
     });
 
     // Load previous messages when joining the room
