@@ -30,6 +30,8 @@ function NewRoomPage() {
         if (!response.success) {
           console.log("Error joining room:", response.message);
           toast.error(`Error joining room: ${response.message}`);
+          setLocation("/");
+          return;
         } else {
           // Store user info in localStorage
           localStorage.setItem("userName", userName);
@@ -46,12 +48,12 @@ function NewRoomPage() {
       .catch((err) => {
         console.log("Error joining room:", err);
         toast.error(`Error joining room: ${err.message}`);
+        setLocation("/");
       });
   };
 
   return (
     <Container className="mt-5">
-      <button onClick={() => toast.error("this is an error")}>error</button>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Your Name</Form.Label>

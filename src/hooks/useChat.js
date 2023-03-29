@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
+import { useLocation } from "wouter";
+import toast from "react-hot-toast";
 
 const NEW_MESSAGE_EVENT = "newChatMessage";
 const ERROR_EVENT = "error";
@@ -8,6 +10,7 @@ const SOCKET_SERVER_URL = "http://localhost:3001";
 const useChat = (roomCode) => {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     // Create WS connection
@@ -33,13 +36,25 @@ const useChat = (roomCode) => {
     });
 
     // Listen for errors
-    socketRef.current.on(ERROR_EVENT, (errorMessage) => {});
+    socketRef.current.on(ERROR_EVENT, (errorBody) => {
+      console.log("errorBody:", JSON.parse(errorBody));
+      const response = JSON.parse(errorBody);
+      // Handle room not found
+      if (response.code === 404) {
+        toast.error("That room doesn't exist. Please try again.");
+        setLocation("/");
+        // Fallback
+      } else {
+        toast.error(response.message);
+        setLocation("/");
+      }
+    });
 
     // When connection is closed, destroy the socket ref
     return () => {
       socketRef.current.disconnect();
     };
-  }, [roomCode]);
+  }, [roomCode, setLocation]);
 
   // Sends message to server, to be forwarded to all users in the same room
   const sendMessage = (text) => {
