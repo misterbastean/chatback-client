@@ -2,14 +2,18 @@ import { Row } from "react-bootstrap";
 import Message from "./Message";
 
 function ChatPane({ messages }) {
+  const currentUserId = localStorage.getItem("userId");
   return (
     <Row style={{ marginTop: "6rem", marginBottom: "5rem" }}>
       <div>
         {messages.map((message) => {
           let parsedUsername = message.userName;
-          if (message.userRole === "moderator")
+          if (message.userId == currentUserId) {
+            parsedUsername = `${message.userName} (You)`;
+          } else if (message.userRole === "moderator") {
             parsedUsername = `${message.userName} (Moderator)`;
-          // TODO: Add check for username is current user, append "(You)"
+          }
+
           return (
             <Message
               key={message._id}
