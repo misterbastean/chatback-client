@@ -3,7 +3,7 @@ import Message from "./Message";
 
 function ChatPane({ messages }) {
   return (
-    <Row style={{ marginTop: "5rem", marginBottom: "5rem" }}>
+    <Row style={{ marginTop: "6rem", marginBottom: "5rem" }}>
       <div>
         {messages.map((message) => (
           <Message

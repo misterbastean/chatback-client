@@ -9,7 +9,7 @@ function ChatHeader({ roomCode }) {
         zIndex: 100,
       }}
     >
-      <h1 className="text-center mb-3 py-3 text-white bg-info border-bottom">
+      <h1 className="text-center py-3 text-white bg-info border-bottom">
         {roomCode}
       </h1>
     </Row>
