@@ -12,7 +12,7 @@ function ChatInput({ handleNewMessageChange, handleKeyDown, newMessage }) {
         zIndex: 100,
       }}
     >
-      <Col xs={8} lg={10} xl={12}>
+      <Col xs={10} lg={10} xl={11}>
         <Form.Control
           type="text"
           placeholder="Type message..."
@@ -21,10 +21,11 @@ function ChatInput({ handleNewMessageChange, handleKeyDown, newMessage }) {
           onKeyDown={handleKeyDown}
         />
       </Col>
-      <Col>
-        <Button variant="primary" style={{ width: "5rem" }}>
-          Send
-        </Button>
+
+      <Col xs={2} lg={2} xl={1}>
+        <div className="d-grid gap-2">
+          <Button variant="primary">Send</Button>
+        </div>
       </Col>
     </Row>
   );
